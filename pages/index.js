@@ -1,8 +1,9 @@
 import styles from '../styles/pages/Home.module.scss'
 import Nav from '../components/nav'
+import { readDir } from '../lib/fileService'
+ 
 
-
-export default function Home() {
+export default function Home({ portfolios }) {
   return (
     <>
     <Nav />
@@ -18,8 +19,12 @@ export default function Home() {
         </div>
 
         <div id="work" className={styles.gallery}>
-          <h1>Gallery</h1>
-          <p>This is where my works will be presented</p>
+          {
+            portfolios.map((project, i) => <div key={i} className={styles.project}>
+              <div className={styles.frame}><img src={`/portfolios/${project.title}/${project.images[0]}`}/></div>
+              <p>{project.title}</p>
+              </div>)
+          }
         </div>
      
         <div id="about" className={styles.profile}>
@@ -35,4 +40,16 @@ export default function Home() {
       </div>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await readDir('/public/portfolios')
+  let portfolios = []
+  res.forEach(async (project, i) => {
+    portfolios.push({
+      title: project,
+      images: await readDir(`/public/portfolios/${project}`)
+    })
+  })
+  return { props: { portfolios } }
 }
