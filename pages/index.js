@@ -1,5 +1,6 @@
 import styles from '../styles/pages/Home.module.scss'
 import Nav from '../components/nav'
+import path from 'path'
 import { readDir } from '../lib/fileService'
  
 
@@ -21,7 +22,7 @@ export default function Home({ portfolios }) {
         <div id="work" className={styles.gallery}>
           {
             portfolios.map((project, i) => <div key={i} className={styles.project}>
-              <div className={styles.frame}><img src={`/portfolios/${project.title}/${project.images[0]}`}/></div>
+              <div className={styles.frame}><img src={path.join('/', 'portfolios', project.title, project.images[0])}/></div>
               <p>{project.title}</p>
               </div>)
           }
