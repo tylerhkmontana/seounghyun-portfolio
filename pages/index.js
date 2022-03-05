@@ -42,7 +42,7 @@ export default function Home({ portfolios }) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await readDir('/public/portfolios')
   let portfolios = []
   res.forEach(async (project, i) => {
