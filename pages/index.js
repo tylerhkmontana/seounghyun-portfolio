@@ -1,11 +1,16 @@
 import styles from '../styles/pages/Home.module.scss'
+import Head from 'next/head'
 import Nav from '../components/nav'
+import Link from 'next/link'
 import { readDir } from '../lib/fileService'
  
 
 export default function Home({ portfolios }) {
   return (
     <>
+    <Head>
+      <title key="title">SH Jacob Lee | Portfolio</title>
+    </Head>
     <Nav />
     <div className={styles.container}>
 
@@ -18,25 +23,25 @@ export default function Home({ portfolios }) {
           </p>
         </div>
 
-        <div id="work" className={styles.gallery}>
-          {
-            portfolios.map((project, i) => <div key={i} className={styles.project}>
-              <div className={styles.frame}><img src={`/portfolios/${project.title}/${project.images[0]}`}/></div>
-              <p>{project.title}</p>
-              </div>)
-          }
+        <div id="work" className={styles.gallery}>          
+          <div className={styles.gallery_container}>
+            {
+                portfolios.map((project, i) => <div key={i} className={styles.project}>
+                  <div className={styles.project_info}>
+                    <h4>{project.title}</h4>
+                    <p>this is a sample text for project description.</p>
+                    <Link href={{ pathname: '/project', query: { project_title: project.title } }}><button>explore</button></Link>
+                  </div>
+                <img src={`/portfolios/${project.title}/${project.images[0]}`}/>
+                  </div>)
+              }
+          </div>
         </div>
      
         <div id="about" className={styles.profile}>
           <h1>Seounghyun Lee | Profile</h1>
           <p>This is a sample Text</p>
         </div>
-{/* 
-        <div class="btn-group">
-          <button>Copy</button>
-          <button>Paste</button>
-          <button>Cut</button>
-        </div> */}
       </div>
     </>
   )
