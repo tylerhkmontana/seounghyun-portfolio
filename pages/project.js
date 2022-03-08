@@ -11,7 +11,7 @@ export default function Project({ images }) {
         <div>
             <h1>{project_title}</h1>
             {
-                images.map(img => <p>{img}</p>)
+                images.map((img, i) => <p key={i}>{img}</p>)
             }
         </div>
     )
