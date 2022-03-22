@@ -1,0 +1,26 @@
+@import '../../styles/theme.scss';
+
+.footer {
+    width:100%;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $secondary_color;
+    padding: 20px;
+}
+
+.sns_icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    img {
+        width: 40px;
+        margin: 0 25px;
+    }
+}
+
+.powered_by {
+    text-decoration: underline;
+}
