@@ -31,7 +31,7 @@ export default function Home({ portfolios }) {
                   <div className={styles.project_info}>
                     <h4>{project.title}</h4>
                     <p>this is a sample text for project description.</p>
-                    <Link href={{ pathname: '/project', query: { project_title: project.title } }}><button>explore</button></Link>
+                    <Link href={`/projects/${project.title}`}><button>explore</button></Link>
                   </div>
                 <img src={`/portfolios/${project.title}/${project.images[0]}`}/>
                   </div>)

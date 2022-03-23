@@ -1,14 +1,8 @@
-import { useRouter } from "next/router"
-import { readDir } from '../lib/fileService'
+import { readDir } from '../../lib/fileService'
 import Link from 'next/link'
-import styles from '../styles/pages/Project.module.scss'
+import styles from '../../styles/pages/Project.module.scss'
 
-export default function Project({ images }) {
-    const router = useRouter()
-    const { project_title } = router.query
-
-    console.log(images)
-
+export default function Project({ images, project_title }) {
     return (
         <div>
             <Link href="/"><a className={styles.go_back_btn}>&larr; Go Back</a></Link>
@@ -23,11 +17,34 @@ export default function Project({ images }) {
     )
 }
 
-export async function getServerSideProps({ query }) {
-    const { project_title } = query
-    const images =  await readDir(`/public/portfolios/${project_title}`)
+export async function getStaticPaths() {
+    const projects = await readDir('/public/portfolios')
+
+    const paths = projects.map(prj => ({
+        params: { title: prj }
+    }))
+
+    return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }) {
+    const project_title = params.title
+    console.log(project_title)
+    const images = await readDir(`/public/portfolios/${project_title}`)
 
     return {
-        props: { images, project_title }
+        props: {
+            images, project_title
+        }
     }
 }
+
+// export async function getServerSideProps({ query }) {
+//     const { project_title } = query
+//     const images =  await readDir(`/public/portfolios/${project_title}`)
+
+//     return {
+//         props: { images, project_title }
+//     }
+// }
+
